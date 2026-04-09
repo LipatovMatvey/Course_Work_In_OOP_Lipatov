@@ -11,6 +11,21 @@ namespace Course_work_in_OOP_Lipatov
     public partial class HospitalForm : Form
     {
         /// <summary>
+        /// 
+        /// </summary>
+        private DataBaseManager dbManager;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<Patient> patients;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<Patient> filteredPatients;
+
+        /// <summary>
         /// Конструктор
         /// </summary>
         public HospitalForm()
@@ -92,6 +107,16 @@ namespace Course_work_in_OOP_Lipatov
         private void btnSearch_Click(object sender, EventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnManageDatabases_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

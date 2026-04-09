@@ -26,7 +26,9 @@
             btnSearch = new Button();
             btnExport = new Button();
             btnRefresh = new Button();
+            btnClearDatabase = new Button();
             label2 = new Label();
+            btnManageDatabases = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -35,7 +37,7 @@
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label1.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
             label1.ForeColor = Color.DimGray;
-            label1.Location = new Point(682, 440);
+            label1.Location = new Point(787, 440);
             label1.Name = "label1";
             label1.Size = new Size(281, 29);
             label1.TabIndex = 0;
@@ -49,7 +51,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(685, 482);
+            button1.Location = new Point(790, 482);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(243, 44);
@@ -91,7 +93,7 @@
             dataGridView1.RowTemplate.DefaultCellStyle.SelectionForeColor = Color.Black;
             dataGridView1.RowTemplate.Height = 24;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(916, 312);
+            dataGridView1.Size = new Size(1021, 312);
             dataGridView1.TabIndex = 2;
             // 
             // btnAdd
@@ -104,7 +106,7 @@
             btnAdd.Location = new Point(12, 432);
             btnAdd.Margin = new Padding(3, 4, 3, 4);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(110, 44);
+            btnAdd.Size = new Size(150, 44);
             btnAdd.TabIndex = 3;
             btnAdd.Text = "Добавить";
             btnAdd.UseVisualStyleBackColor = false;
@@ -117,10 +119,10 @@
             btnEdit.FlatStyle = FlatStyle.Flat;
             btnEdit.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnEdit.ForeColor = Color.White;
-            btnEdit.Location = new Point(128, 432);
+            btnEdit.Location = new Point(168, 432);
             btnEdit.Margin = new Padding(3, 4, 3, 4);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(138, 44);
+            btnEdit.Size = new Size(150, 44);
             btnEdit.TabIndex = 4;
             btnEdit.Text = "Редактировать";
             btnEdit.UseVisualStyleBackColor = false;
@@ -133,10 +135,10 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(272, 432);
+            btnDelete.Location = new Point(324, 432);
             btnDelete.Margin = new Padding(3, 4, 3, 4);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(91, 44);
+            btnDelete.Size = new Size(150, 44);
             btnDelete.TabIndex = 5;
             btnDelete.Text = "Удалить";
             btnDelete.UseVisualStyleBackColor = false;
@@ -146,10 +148,10 @@
             // 
             txtSearch.BorderStyle = BorderStyle.FixedSingle;
             txtSearch.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            txtSearch.Location = new Point(380, 440);
+            txtSearch.Location = new Point(484, 440);
             txtSearch.Margin = new Padding(3, 4, 3, 4);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(180, 26);
+            txtSearch.Size = new Size(135, 26);
             txtSearch.TabIndex = 6;
             // 
             // btnSearch
@@ -159,10 +161,10 @@
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(566, 432);
+            btnSearch.Location = new Point(626, 434);
             btnSearch.Margin = new Padding(3, 4, 3, 4);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(110, 44);
+            btnSearch.Size = new Size(140, 44);
             btnSearch.TabIndex = 7;
             btnSearch.Text = "Поиск";
             btnSearch.UseVisualStyleBackColor = false;
@@ -178,7 +180,7 @@
             btnExport.Location = new Point(12, 482);
             btnExport.Margin = new Padding(3, 4, 3, 4);
             btnExport.Name = "btnExport";
-            btnExport.Size = new Size(110, 44);
+            btnExport.Size = new Size(150, 44);
             btnExport.TabIndex = 8;
             btnExport.Text = "Экспорт";
             btnExport.UseVisualStyleBackColor = false;
@@ -186,19 +188,34 @@
             // 
             // btnRefresh
             // 
-            btnRefresh.BackColor = Color.LightGray;
+            btnRefresh.BackColor = Color.FromArgb(0, 192, 192);
             btnRefresh.FlatAppearance.BorderSize = 0;
             btnRefresh.FlatStyle = FlatStyle.Flat;
             btnRefresh.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            btnRefresh.ForeColor = Color.Black;
-            btnRefresh.Location = new Point(128, 482);
+            btnRefresh.ForeColor = Color.White;
+            btnRefresh.Location = new Point(168, 482);
             btnRefresh.Margin = new Padding(3, 4, 3, 4);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(110, 44);
+            btnRefresh.Size = new Size(150, 44);
             btnRefresh.TabIndex = 9;
             btnRefresh.Text = "Обновить";
             btnRefresh.UseVisualStyleBackColor = false;
             btnRefresh.Click += btnRefresh_Click;
+            // 
+            // btnClearDatabase
+            // 
+            btnClearDatabase.BackColor = Color.Crimson;
+            btnClearDatabase.FlatAppearance.BorderSize = 0;
+            btnClearDatabase.FlatStyle = FlatStyle.Flat;
+            btnClearDatabase.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            btnClearDatabase.ForeColor = Color.White;
+            btnClearDatabase.Location = new Point(324, 484);
+            btnClearDatabase.Margin = new Padding(3, 4, 3, 4);
+            btnClearDatabase.Name = "btnClearDatabase";
+            btnClearDatabase.Size = new Size(150, 44);
+            btnClearDatabase.TabIndex = 10;
+            btnClearDatabase.Text = "Очистить БД";
+            btnClearDatabase.UseVisualStyleBackColor = false;
             // 
             // label2
             // 
@@ -207,20 +224,38 @@
             label2.BackColor = Color.SteelBlue;
             label2.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Point, 204);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(203, 48);
+            label2.Location = new Point(256, 48);
             label2.Name = "label2";
             label2.Padding = new Padding(10, 12, 10, 12);
             label2.Size = new Size(574, 53);
-            label2.TabIndex = 10;
+            label2.TabIndex = 11;
             label2.Text = "ИНФОРМАЦИОННАЯ СИСТЕМА БОЛЬНИЦЫ";
+            // 
+            // btnManageDatabases
+            // 
+            btnManageDatabases.BackColor = Color.DarkCyan;
+            btnManageDatabases.FlatAppearance.BorderSize = 0;
+            btnManageDatabases.FlatStyle = FlatStyle.Flat;
+            btnManageDatabases.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            btnManageDatabases.ForeColor = Color.White;
+            btnManageDatabases.Location = new Point(484, 484);
+            btnManageDatabases.Margin = new Padding(3, 4, 3, 4);
+            btnManageDatabases.Name = "btnManageDatabases";
+            btnManageDatabases.Size = new Size(150, 44);
+            btnManageDatabases.TabIndex = 12;
+            btnManageDatabases.Text = "Управление БД";
+            btnManageDatabases.UseVisualStyleBackColor = false;
+            btnManageDatabases.Click += btnManageDatabases_Click;
             // 
             // HospitalForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(963, 562);
+            ClientSize = new Size(1068, 555);
+            Controls.Add(btnManageDatabases);
             Controls.Add(label2);
+            Controls.Add(btnClearDatabase);
             Controls.Add(btnRefresh);
             Controls.Add(btnExport);
             Controls.Add(btnSearch);
@@ -240,6 +275,7 @@
             PerformLayout();
 
         }
+
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -250,6 +286,8 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button btnClearDatabase;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnManageDatabases;
     }
 }
