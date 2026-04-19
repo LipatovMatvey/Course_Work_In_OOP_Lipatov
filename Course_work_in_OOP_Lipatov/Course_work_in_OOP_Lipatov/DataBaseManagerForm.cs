@@ -13,9 +13,39 @@ namespace Course_work_in_OOP_Lipatov
         /// <summary>
         /// 
         /// </summary>
-        public DataBaseManagerForm()
+        private DataBaseManager dbManager;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool DatabaseChanged { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DataBaseManagerForm(DataBaseManager manager)
         {
             InitializeComponent();
+            dbManager = manager;
+            DatabaseChanged = false;
+            LoadDatabases();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadDatabases()
+        {
+            listBoxDatabases.Items.Clear();
+            var dbs = dbManager.GetAllDatabases();
+            foreach (var db in dbs)
+            {
+                listBoxDatabases.Items.Add(db);
+            }
+            if (listBoxDatabases.Items.Count > 0)
+            {
+                listBoxDatabases.SelectedIndex = 0;
+            }
         }
 
         /// <summary>
@@ -25,7 +55,20 @@ namespace Course_work_in_OOP_Lipatov
         /// <param name="e"></param>
         private void btnCreate_Click(object sender, EventArgs e)
         {
-
+            string newDbName = txtNewDbName.Text.Trim();
+            if (string.IsNullOrWhiteSpace(newDbName))
+            {
+                MessageBox.Show("Введите имя новой базы данных.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (newDbName.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) >= 0)
+            {
+                MessageBox.Show("Имя БД содержит недопустимые символы.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            dbManager.CreateDatabase(newDbName);
+            LoadDatabases();
+            txtNewDbName.Clear();
         }
 
         /// <summary>
@@ -35,7 +78,18 @@ namespace Course_work_in_OOP_Lipatov
         /// <param name="e"></param>
         private void btnSwitch_Click(object sender, EventArgs e)
         {
-
+            if (listBoxDatabases.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите базу данных для переключения.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            string dbName = listBoxDatabases.SelectedItem.ToString();
+            if (dbManager.SwitchToDatabase(dbName))
+            {
+                DatabaseChanged = true;
+                MessageBox.Show($"Переключено на базу данных \"{dbName}\".", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
         }
 
         /// <summary>
@@ -45,7 +99,18 @@ namespace Course_work_in_OOP_Lipatov
         /// <param name="e"></param>
         private void btnDelete_Click(object sender, EventArgs e)
         {
-
+            if (listBoxDatabases.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите базу данных для удаления.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            string dbName = listBoxDatabases.SelectedItem.ToString();
+            if (MessageBox.Show($"Удалить базу данных \"{dbName}\"?\nВосстановить будет невозможно.", "Подтверждение",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                dbManager.DeleteDatabase(dbName);
+                LoadDatabases();
+            }
         }
 
         /// <summary>
@@ -55,7 +120,7 @@ namespace Course_work_in_OOP_Lipatov
         /// <param name="e"></param>
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-
+            LoadDatabases();
         }
     }
 }
