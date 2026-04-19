@@ -11,18 +11,19 @@ namespace Course_work_in_OOP_Lipatov
     public partial class DataBaseManagerForm : Form
     {
         /// <summary>
-        /// 
+        /// Менеджер для работы с базой данных пациентов
         /// </summary>
         private DataBaseManager dbManager;
 
         /// <summary>
-        /// 
+        /// Флаг, была ли изменена текущая база данных
         /// </summary>
         public bool DatabaseChanged { get; private set; }
 
         /// <summary>
-        /// 
+        /// Инициализирует новый экземпляр формы управления базами данных
         /// </summary>
+        /// <param name="manager">Объект менеджера баз данных</param>
         public DataBaseManagerForm(DataBaseManager manager)
         {
             InitializeComponent();
@@ -32,7 +33,7 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// 
+        /// Загружает список всех доступных баз данных
         /// </summary>
         private void LoadDatabases()
         {
@@ -49,7 +50,7 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// 
+        /// Обработчик нажатия кнопки "Создать"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -72,7 +73,7 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// 
+        /// Обработчик нажатия кнопки "Переключиться"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -93,7 +94,7 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// 
+        /// Обработчик нажатия кнопки "Удалить"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -114,7 +115,7 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// 
+        /// Обработчик нажатия кнопки "Обновить"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
