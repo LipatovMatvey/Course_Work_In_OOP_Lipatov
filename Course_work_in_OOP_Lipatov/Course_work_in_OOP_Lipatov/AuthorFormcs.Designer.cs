@@ -55,9 +55,9 @@
             label1.ForeColor = Color.White;
             label1.Location = new Point(15, 19);
             label1.Name = "label1";
-            label1.Size = new Size(276, 25);
+            label1.Size = new Size(278, 25);
             label1.TabIndex = 0;
-            label1.Text = "Курсовая работа на тему:";
+            label1.Text = "Курсовой проект на тему:";
             // 
             // button1
             // 
