@@ -38,6 +38,62 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
+        /// Проверяет, существует ли в базе полностью совпадающая запись пациента.
+        /// Сравнение выполняется по всем полям
+        /// </summary>
+        /// <param name="patient">Данные пациента для проверки</param>
+        /// <returns>true, если найден дубликат</returns>
+        public bool IsDuplicate(Patient patient)
+        {
+            try
+            {
+                using (var conn = new NpgsqlConnection(connectionString))
+                {
+                    conn.Open();
+                    var query = @"
+                        SELECT COUNT(*) FROM patients
+                        WHERE COALESCE(TRIM(LOWER(full_name)),'') = COALESCE(TRIM(LOWER(@fullName)),'')
+                          AND age = @age
+                          AND COALESCE(TRIM(LOWER(gender)),'') = COALESCE(TRIM(LOWER(@gender)),'')
+                          AND COALESCE(TRIM(LOWER(disease)),'') = COALESCE(TRIM(LOWER(@disease)),'')
+                          AND duration = @duration
+                          AND COALESCE(TRIM(LOWER(severity)),'') = COALESCE(TRIM(LOWER(@severity)),'')
+                          AND COALESCE(TRIM(LOWER(department)),'') = COALESCE(TRIM(LOWER(@department)),'')";
+
+                    if (patient.Id > 0)
+                    {
+                        query += " AND id <> @id";
+                    }
+
+                    using (var cmd = new NpgsqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@fullName", patient.FullName ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@age", patient.Age);
+                        cmd.Parameters.AddWithValue("@gender", patient.Gender ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@disease", patient.Disease ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@duration", patient.Duration);
+                        cmd.Parameters.AddWithValue("@severity", patient.Severity ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@department", patient.Department ?? string.Empty);
+                        if (patient.Id > 0)
+                        {
+                            cmd.Parameters.AddWithValue("@id", patient.Id);
+                        }
+                        var result = cmd.ExecuteScalar();
+                        if (result != null && int.TryParse(result.ToString(), out int count))
+                        {
+                            return count > 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при проверке дубликатов: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Инициализирует структуру БД
         /// </summary>
         private void InitializeDatabase()
@@ -164,11 +220,14 @@ namespace Course_work_in_OOP_Lipatov
                         FROM pg_stat_activity
                         WHERE pg_stat_activity.datname = '{dbName}' AND pid <> pg_backend_pid()";
                     using (var cmd = new NpgsqlCommand(terminateQuery, conn))
+                    {
                         cmd.ExecuteNonQuery();
-
+                    }
                     string dropQuery = $"DROP DATABASE \"{dbName}\"";
                     using (var cmd = new NpgsqlCommand(dropQuery, conn))
+                    {
                         cmd.ExecuteNonQuery();
+                    }
                 }
                 MessageBox.Show($"База данных \"{dbName}\" удалена.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -392,7 +451,7 @@ namespace Course_work_in_OOP_Lipatov
         /// <summary>
         /// Удаляет всех пациентов из таблицы и сбрасывает счётчик идентификаторов
         /// </summary>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Возникает при ошибке очистки базы данных</exception>
         public void ClearAllPatients()
         {
             try
