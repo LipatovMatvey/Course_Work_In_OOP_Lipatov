@@ -95,6 +95,8 @@
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(1021, 312);
             dataGridView1.TabIndex = 2;
+            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
+            dataGridView1.ColumnHeaderMouseClick += dataGridView1_ColumnHeaderMouseClick;
             // 
             // btnAdd
             // 
@@ -216,6 +218,7 @@
             btnClearDatabase.TabIndex = 10;
             btnClearDatabase.Text = "Очистить БД";
             btnClearDatabase.UseVisualStyleBackColor = false;
+            btnClearDatabase.Click += btnClearDatabase_Click;
             // 
             // label2
             // 
