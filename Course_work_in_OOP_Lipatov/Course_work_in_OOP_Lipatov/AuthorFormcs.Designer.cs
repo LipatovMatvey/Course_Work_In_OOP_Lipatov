@@ -74,7 +74,7 @@
             button1.TabIndex = 1;
             button1.Text = "ПЕРЕЙТИ В ПРИЛОЖЕНИЕ";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            button1.Click += btnRun_Click;
             // 
             // label2
             // 
@@ -103,7 +103,7 @@
             button2.TabIndex = 3;
             button2.Text = "ВЫХОД ИЗ ПРОГРАММЫ";
             button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
+            button2.Click += btnClose_Click;
             // 
             // label3
             // 
