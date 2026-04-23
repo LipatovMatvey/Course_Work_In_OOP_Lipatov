@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Npgsql;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Course_work_in_OOP_Lipatov
@@ -21,6 +22,11 @@ namespace Course_work_in_OOP_Lipatov
         /// Имя текущей базы данных
         /// </summary>
         private string currentDatabaseName;
+
+        /// <summary>
+        /// Регулярное выражение для проверки имени создаваемой БД
+        /// </summary>
+        private static readonly Regex dbNameRegex = new Regex(@"^(?![\s\d]).+", RegexOptions.Compiled);
 
         /// <summary>
         /// Конструктор инициализирует менеджер с БД по умолчанию
@@ -178,6 +184,11 @@ namespace Course_work_in_OOP_Lipatov
         /// <param name="dbName">Имя создаваемой базы данных</param>
         public void CreateDatabase(string dbName)
         {
+            if (string.IsNullOrWhiteSpace(dbName) || !dbNameRegex.IsMatch(dbName))
+            {
+                MessageBox.Show("Некорректное имя базы данных. Имя не должно начинаться с пробела или цифры и не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 using (var conn = new NpgsqlConnection(masterConnectionString))
