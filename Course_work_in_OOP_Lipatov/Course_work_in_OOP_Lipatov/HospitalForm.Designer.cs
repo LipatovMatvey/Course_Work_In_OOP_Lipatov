@@ -74,6 +74,7 @@
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.Fixed3D;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -292,5 +293,13 @@
         private System.Windows.Forms.Button btnClearDatabase;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnManageDatabases;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFullName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAge;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGender;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDisease;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSeverity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDuration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDepartment;
     }
 }

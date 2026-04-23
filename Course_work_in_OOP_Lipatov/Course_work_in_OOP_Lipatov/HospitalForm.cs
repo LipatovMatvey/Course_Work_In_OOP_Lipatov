@@ -56,7 +56,7 @@ namespace Course_work_in_OOP_Lipatov
             patients = dbManager.GetAllPatients();
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = patients;
-            FormatDataGridView();
+            dataGridView1.Refresh();
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Course_work_in_OOP_Lipatov
                 filteredPatients = dbManager.SearchPatients(txtSearch.Text);
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = filteredPatients;
-                FormatDataGridView();
+                    dataGridView1.Refresh();
             }
             else
             {
@@ -280,32 +280,7 @@ namespace Course_work_in_OOP_Lipatov
             }
         }
 
-        /// <summary>
-        /// Настраивает внешний вид и заголовки столбцов таблицы DataGridView
-        /// </summary>
-        private void FormatDataGridView()
-        {
-            if (dataGridView1.Columns.Count > 0)
-            {
-                dataGridView1.Columns["Id"].HeaderText = "ID";
-                dataGridView1.Columns["Id"].Width = 30;
-                dataGridView1.Columns["FullName"].HeaderText = "ФИО";
-                dataGridView1.Columns["FullName"].Width = 140;
-                dataGridView1.Columns["Age"].HeaderText = "Возраст";
-                dataGridView1.Columns["Age"].Width = 70;
-                dataGridView1.Columns["Gender"].HeaderText = "Пол";
-                dataGridView1.Columns["Gender"].Width = 80;
-                dataGridView1.Columns["Disease"].HeaderText = "Диагноз";
-                dataGridView1.Columns["Disease"].Width = 150;
-                dataGridView1.Columns["Severity"].HeaderText = "Тяжесть";
-                dataGridView1.Columns["Severity"].Width = 100;
-                dataGridView1.Columns["Duration"].HeaderText = "Дней";
-                dataGridView1.Columns["Duration"].Width = 50;
-                dataGridView1.Columns["Department"].HeaderText = "Отделение";
-                dataGridView1.Columns["Department"].Width = 130;
-            }
-            dataGridView1.Refresh();
-        }
+
 
         /// <summary>
         /// Обработчик клика по заголовку столбца DataGridView
@@ -347,7 +322,7 @@ namespace Course_work_in_OOP_Lipatov
                 }
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = data;
-                FormatDataGridView();
+                dataGridView1.Refresh();
             }
         }
 
