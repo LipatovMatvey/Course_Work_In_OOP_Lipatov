@@ -164,10 +164,10 @@
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(626, 434);
+            btnSearch.Location = new Point(625, 432);
             btnSearch.Margin = new Padding(3, 4, 3, 4);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(140, 44);
+            btnSearch.Size = new Size(150, 44);
             btnSearch.TabIndex = 7;
             btnSearch.Text = "Поиск";
             btnSearch.UseVisualStyleBackColor = false;
@@ -194,7 +194,7 @@
             btnRefresh.BackColor = Color.FromArgb(0, 192, 192);
             btnRefresh.FlatAppearance.BorderSize = 0;
             btnRefresh.FlatStyle = FlatStyle.Flat;
-            btnRefresh.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            btnRefresh.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnRefresh.ForeColor = Color.White;
             btnRefresh.Location = new Point(168, 482);
             btnRefresh.Margin = new Padding(3, 4, 3, 4);

@@ -179,7 +179,6 @@
             Controls.Add(panelHeader);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(3, 4, 3, 4);
-            MaximizeBox = false;
             MinimizeBox = false;
             Name = "DataBaseManagerForm";
             StartPosition = FormStartPosition.CenterParent;
