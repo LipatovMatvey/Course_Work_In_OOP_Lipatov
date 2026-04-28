@@ -72,7 +72,7 @@
             button1.Name = "button1";
             button1.Size = new Size(286, 108);
             button1.TabIndex = 1;
-            button1.Text = "ПЕРЕЙТИ В ПРИЛОЖЕНИЕ";
+            button1.Text = "Перейти в приложение";
             button1.UseVisualStyleBackColor = false;
             button1.Click += btnRun_Click;
             // 
@@ -101,7 +101,7 @@
             button2.Name = "button2";
             button2.Size = new Size(286, 108);
             button2.TabIndex = 3;
-            button2.Text = "ВЫХОД ИЗ ПРОГРАММЫ";
+            button2.Text = "Закрыть приложение";
             button2.UseVisualStyleBackColor = false;
             button2.Click += btnClose_Click;
             // 
@@ -130,7 +130,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label5.Location = new Point(180, 142);
+            label5.Location = new Point(180, 136);
             label5.Name = "label5";
             label5.Size = new Size(133, 24);
             label5.TabIndex = 6;
@@ -160,7 +160,7 @@
             label8.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             label8.Location = new Point(12, 212);
             label8.Name = "label8";
-            label8.Size = new Size(527, 212);
+            label8.Size = new Size(497, 212);
             label8.TabIndex = 9;
             label8.Text = resources.GetString("label8.Text");
             // 
