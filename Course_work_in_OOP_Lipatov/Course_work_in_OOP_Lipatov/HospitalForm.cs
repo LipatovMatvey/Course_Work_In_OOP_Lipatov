@@ -144,10 +144,10 @@ namespace Course_work_in_OOP_Lipatov
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+                saveFileDialog.Filter = "Текстовые файлы (*.pdf)|*.pdf|Все файлы (*.*)|*.*";
                 saveFileDialog.FilterIndex = 1;
                 saveFileDialog.RestoreDirectory = true;
-                saveFileDialog.FileName = $"patients_export_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
+                saveFileDialog.FileName = $"patients_export_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.pdf";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try
