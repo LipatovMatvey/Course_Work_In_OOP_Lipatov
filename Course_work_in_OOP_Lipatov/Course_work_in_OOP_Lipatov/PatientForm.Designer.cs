@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientForm));
             label1 = new Label();
             txtFullName = new TextBox();
             label2 = new Label();
@@ -297,6 +298,7 @@
             Controls.Add(label2);
             Controls.Add(txtFullName);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "PatientForm";
             StartPosition = FormStartPosition.CenterParent;

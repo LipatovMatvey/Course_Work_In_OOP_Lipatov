@@ -16,6 +16,7 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HospitalForm));
             label1 = new Label();
             button1 = new Button();
             dataGridView1 = new DataGridView();
@@ -270,6 +271,7 @@
             Controls.Add(dataGridView1);
             Controls.Add(button1);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "HospitalForm";
             StartPosition = FormStartPosition.CenterScreen;

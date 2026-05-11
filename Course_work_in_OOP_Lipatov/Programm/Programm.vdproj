@@ -15,7 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_3FC6423D12944DD3842C2F4640E4C1B9"
+        "MsmKey" = "8:_84C9F46B844A4184992A38FEFA18A9C8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C39CDC1F57A3475CAB4078076C20656E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -44,6 +50,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -68,6 +82,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -108,6 +130,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_84C9F46B844A4184992A38FEFA18A9C8"
+            {
+            "SourcePath" = "8:..\\Course_work_in_OOP_Lipatov\\FOTO\\HospitalFoto.ico"
+            "TargetName" = "8:HospitalFoto.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B21590938B21498A928CBB6F75B5698D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -176,7 +218,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Programm"
         "ProductCode" = "8:{6BEB1B49-343F-4624-93A1-971DA3DAAAC7}"
-        "PackageCode" = "8:{380707D0-99CC-444D-BF0C-22EA351464F3}"
+        "PackageCode" = "8:{8AA8DE81-38C1-41D6-93FE-9AF69CA6B0AF}"
         "UpgradeCode" = "8:{ADEC0E6D-A347-4419-AC2A-5914FF46D70B}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -296,7 +338,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A5A405DE24BE4DF49EF26DCCB2548144"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_0F7D43A44EF643E098A4635CF80F3FC7"
             {
             "Name" = "8:HospitalDB"
             "Arguments" = "8:"
@@ -304,24 +346,24 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_3FC6423D12944DD3842C2F4640E4C1B9"
-            "Folder" = "8:_41C1DB6FA1B846CC85BA8BA20A499A90"
-            "WorkingFolder" = "8:_B21590938B21498A928CBB6F75B5698D"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_AA0A4A8D79F74232A5544D1EA4ABF019"
-            {
-            "Name" = "8:HospitalDB"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_3FC6423D12944DD3842C2F4640E4C1B9"
+            "Target" = "8:_C39CDC1F57A3475CAB4078076C20656E"
             "Folder" = "8:_ADCBFD3774C34B85AF88AECA8B00F279"
             "WorkingFolder" = "8:_B21590938B21498A928CBB6F75B5698D"
-            "Icon" = "8:"
+            "Icon" = "8:_84C9F46B844A4184992A38FEFA18A9C8"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_665903A278B44F1DBEF2E07CD98A0F89"
+            {
+            "Name" = "8:HospitalDB"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_C39CDC1F57A3475CAB4078076C20656E"
+            "Folder" = "8:_41C1DB6FA1B846CC85BA8BA20A499A90"
+            "WorkingFolder" = "8:_B21590938B21498A928CBB6F75B5698D"
+            "Icon" = "8:_84C9F46B844A4184992A38FEFA18A9C8"
             "Feature" = "8:"
             }
         }
@@ -723,7 +765,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_3FC6423D12944DD3842C2F4640E4C1B9"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C39CDC1F57A3475CAB4078076C20656E"
             {
             "SourcePath" = "8:..\\Course_work_in_OOP_Lipatov\\obj\\Release\\net10.0-windows\\apphost.exe"
             "TargetName" = "8:"

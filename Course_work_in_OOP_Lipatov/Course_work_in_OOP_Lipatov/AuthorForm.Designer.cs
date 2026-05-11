@@ -214,6 +214,7 @@
             Controls.Add(label3);
             Controls.Add(button2);
             Controls.Add(button1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "AuthorForm";
             StartPosition = FormStartPosition.CenterScreen;

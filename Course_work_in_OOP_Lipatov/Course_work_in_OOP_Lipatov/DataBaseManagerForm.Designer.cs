@@ -13,6 +13,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataBaseManagerForm));
             listBoxDatabases = new ListBox();
             txtNewDbName = new TextBox();
             btnCreate = new Button();
@@ -178,6 +179,7 @@
             Controls.Add(listBoxDatabases);
             Controls.Add(panelHeader);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             MinimizeBox = false;
             Name = "DataBaseManagerForm";
