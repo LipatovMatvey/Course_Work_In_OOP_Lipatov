@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Course_work_in_OOP_Lipatov
 {
     internal static class Program
@@ -8,6 +10,7 @@ namespace Course_work_in_OOP_Lipatov
         [STAThread]
         static void Main()
         {
+            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
             ApplicationConfiguration.Initialize();
             Application.Run(new AuthorForm());
         }

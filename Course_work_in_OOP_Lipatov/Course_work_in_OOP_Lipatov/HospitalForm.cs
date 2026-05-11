@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -53,7 +56,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void button1_Click(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
             this.Hide();
             var mainForm = new AuthorForm();
@@ -129,45 +132,57 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnExport_Click(object sender, EventArgs e)
+        private void BtnExport_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                saveFileDialog.Filter = "Текстовые файлы (*.pdf)|*.pdf|Все файлы (*.*)|*.*";
-                saveFileDialog.FilterIndex = 1;
-                saveFileDialog.RestoreDirectory = true;
+                saveFileDialog.Filter = "PDF файлы (*.pdf)|*.pdf";
                 saveFileDialog.FileName = $"patients_export_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.pdf";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        var patientsToExport = filteredPatients ?? patients;
-                        using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName, false, System.Text.Encoding.UTF8))
+                        var patientsToExport = filteredPatients ?? patients ?? new List<Patient>();
+                        Document.Create(container =>
                         {
-                            writer.WriteLine("ЭКСПОРТ ДАННЫХ О ПАЦИЕНТАХ");
-                            writer.WriteLine($"Дата экспорта: {DateTime.Now:dd.MM.yyyy HH:mm:ss}");
-                            writer.WriteLine($"Всего пациентов: {patientsToExport.Count}");
-                            writer.WriteLine(new string('=', 100));
-                            foreach (var patient in patientsToExport)
+                            container.Page(page =>
                             {
-                                writer.WriteLine($"ID: {patient.Id}");
-                                writer.WriteLine($"ФИО: {patient.FullName}");
-                                writer.WriteLine($"Возраст: {patient.Age}");
-                                writer.WriteLine($"Пол: {patient.Gender}");
-                                writer.WriteLine($"Диагноз: {patient.Disease}");
-                                writer.WriteLine($"Тяжесть: {patient.Severity}");
-                                writer.WriteLine($"Длительность (дней): {patient.Duration}");
-                                writer.WriteLine($"Отделение: {patient.Department}");
-                                writer.WriteLine(new string('-', 50));
-                            }
-                        }
-                        MessageBox.Show($"Данные успешно экспортированы в файл:\n{saveFileDialog.FileName}",
+                                page.Size(PageSizes.A4);
+                                page.Margin(40);
+                                page.Content().Column(col =>
+                                {
+                                    col.Item().Text("ЭКСПОРТ ДАННЫХ О ПАЦИЕНТАХ").Bold().FontSize(18).AlignCenter();
+                                    col.Item().PaddingBottom(10);
+                                    col.Item().Text($"Дата экспорта: {DateTime.Now:dd.MM.yyyy HH:mm:ss}");
+                                    col.Item().Text($"Всего пациентов: {patientsToExport.Count}");
+                                    col.Item().PaddingBottom(10);
+                                    col.Item().LineHorizontal(1);
+                                    col.Item().PaddingBottom(10);
+                                    foreach (var patient in patientsToExport)
+                                    {
+                                        col.Item().Column(patientColumn =>
+                                        {
+                                            patientColumn.Item().Text($"ID: {patient.Id}");
+                                            patientColumn.Item().Text($"ФИО: {patient.FullName}");
+                                            patientColumn.Item().Text($"Возраст: {patient.Age}");
+                                            patientColumn.Item().Text($"Пол: {patient.Gender}");
+                                            patientColumn.Item().Text($"Диагноз: {patient.Disease}");
+                                            patientColumn.Item().Text($"Тяжесть: {patient.Severity}");
+                                            patientColumn.Item().Text($"Длительность (дней): {patient.Duration}");
+                                            patientColumn.Item().Text($"Отделение: {patient.Department}");
+                                            patientColumn.Item().Text(new string('-', 50));
+                                        });
+                                        col.Item().PaddingBottom(10);
+                                    }
+                                });
+                            });
+                        }).GeneratePdf(saveFileDialog.FileName);
+                        MessageBox.Show($"Данные успешно экспортированы в PDF:\n{saveFileDialog.FileName}",
                             "Экспорт завершен", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Ошибка при экспорте: {ex.Message}", "Ошибка",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Ошибка при экспорте: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -178,7 +193,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private void BtnRefresh_Click(object sender, EventArgs e)
         {
             txtSearch.Text = "";
             filteredPatients = null;
@@ -190,7 +205,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void BtnSearch_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(txtSearch.Text))
             {
@@ -210,7 +225,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnManageDatabases_Click(object sender, EventArgs e)
+        private void BtnManageDatabases_Click(object sender, EventArgs e)
         {
             OpenDatabaseManager();
         }
@@ -233,7 +248,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnClearDatabase_Click(object sender, EventArgs e)
+        private void BtnClearDatabase_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
                 "ВНИМАНИЕ! Это действие удалит ВСЕХ пациентов из базы данных!\n\nВы уверены, что хотите продолжить?",
@@ -276,7 +291,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события, содержащие информацию о столбце</param>
-        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void DataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -320,7 +335,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события, содержащие индекс строки</param>
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {

@@ -58,7 +58,7 @@
             button1.TabIndex = 1;
             button1.Text = "Титульная страница";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            button1.Click += btnBack_Click;
             // 
             // dataGridView1
             // 
@@ -96,8 +96,8 @@
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(1021, 312);
             dataGridView1.TabIndex = 2;
-            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
-            dataGridView1.ColumnHeaderMouseClick += dataGridView1_ColumnHeaderMouseClick;
+            dataGridView1.CellDoubleClick += DataGridView1_CellDoubleClick;
+            dataGridView1.ColumnHeaderMouseClick += DataGridView1_ColumnHeaderMouseClick;
             // 
             // btnAdd
             // 
@@ -171,7 +171,7 @@
             btnSearch.TabIndex = 7;
             btnSearch.Text = "Поиск";
             btnSearch.UseVisualStyleBackColor = false;
-            btnSearch.Click += btnSearch_Click;
+            btnSearch.Click += BtnSearch_Click;
             // 
             // btnExport
             // 
@@ -187,7 +187,7 @@
             btnExport.TabIndex = 8;
             btnExport.Text = "Экспорт";
             btnExport.UseVisualStyleBackColor = false;
-            btnExport.Click += btnExport_Click;
+            btnExport.Click += BtnExport_Click;
             // 
             // btnRefresh
             // 
@@ -203,7 +203,7 @@
             btnRefresh.TabIndex = 9;
             btnRefresh.Text = "Обновить";
             btnRefresh.UseVisualStyleBackColor = false;
-            btnRefresh.Click += btnRefresh_Click;
+            btnRefresh.Click += BtnRefresh_Click;
             // 
             // btnClearDatabase
             // 
@@ -219,7 +219,7 @@
             btnClearDatabase.TabIndex = 10;
             btnClearDatabase.Text = "Очистить БД";
             btnClearDatabase.UseVisualStyleBackColor = false;
-            btnClearDatabase.Click += btnClearDatabase_Click;
+            btnClearDatabase.Click += BtnClearDatabase_Click;
             // 
             // label2
             // 
@@ -249,7 +249,7 @@
             btnManageDatabases.TabIndex = 12;
             btnManageDatabases.Text = "Управление БД";
             btnManageDatabases.UseVisualStyleBackColor = false;
-            btnManageDatabases.Click += btnManageDatabases_Click;
+            btnManageDatabases.Click += BtnManageDatabases_Click;
             // 
             // HospitalForm
             // 
