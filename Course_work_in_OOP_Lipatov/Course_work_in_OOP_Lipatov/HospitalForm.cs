@@ -16,12 +16,12 @@ namespace Course_work_in_OOP_Lipatov
         /// <summary>
         /// Список всех пациентов, загруженных из базы данных
         /// </summary>
-        private List<Patient> patients;
+        private List<Patient>? patients;
 
         /// <summary>
         /// Отфильтрованный список пациентов
         /// </summary>
-        private List<Patient> filteredPatients;
+        private List<Patient>? filteredPatients;
 
         /// <summary>
         /// Конструктор
@@ -30,22 +30,11 @@ namespace Course_work_in_OOP_Lipatov
         {
             InitializeComponent();
             dbManager = new DataBaseManager();
-            try
+            if (!dbManager.HasDatabaseSelected)
             {
-                LoadPatients();
+                OpenDatabaseManager();
             }
-            catch
-            {
-                if (MessageBox.Show("Не удалось подключиться к базе данных. Открыть управление БД для создания/выбора?",
-                    "Ошибка подключения", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
-                {
-                    OpenDatabaseManager();
-                }
-                else
-                {
-                    Application.Exit();
-                }
-            }
+            LoadPatients();
         }
 
         /// <summary>
@@ -67,7 +56,7 @@ namespace Course_work_in_OOP_Lipatov
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var mainForm = new AuthorFormcs();
+            var mainForm = new AuthorForm();
             mainForm.ShowDialog();
             this.Close();
         }

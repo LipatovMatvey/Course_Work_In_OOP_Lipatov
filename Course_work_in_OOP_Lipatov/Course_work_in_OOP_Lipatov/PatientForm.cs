@@ -29,12 +29,12 @@ namespace Course_work_in_OOP_Lipatov
         /// <summary>
         /// Менеджер базы данных для проверки дубликатов и сохранения
         /// </summary>
-        private DataBaseManager dbManager;
+        private DataBaseManager? dbManager;
 
         /// <summary>
         /// Пациент для редактирования или создания
         /// </summary>
-        public Patient Patient { get; private set; }
+        public Patient? Patient { get; private set; }
 
         /// <summary>
         /// Конструктор
@@ -49,7 +49,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="patient">Пациент для редактирования или создания</param>
         /// <param name="dbManager">Менеджер базы данных для проверки дубликатов и сохранения</param>
-        public PatientForm(Patient patient = null, DataBaseManager dbManager = null) : this()
+        public PatientForm(Patient? patient = null, DataBaseManager? dbManager = null) : this()
         {
             this.dbManager = dbManager ?? new DataBaseManager();
             if (patient != null)

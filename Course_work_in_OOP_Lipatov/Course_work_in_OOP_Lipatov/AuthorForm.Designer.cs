@@ -1,6 +1,6 @@
 ﻿namespace Course_work_in_OOP_Lipatov
 {
-    partial class AuthorFormcs
+    partial class AuthorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AuthorFormcs));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AuthorForm));
             label1 = new Label();
             button1 = new Button();
             label2 = new Label();
@@ -160,7 +160,7 @@
             label8.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             label8.Location = new Point(12, 212);
             label8.Name = "label8";
-            label8.Size = new Size(497, 212);
+            label8.Size = new Size(497, 301);
             label8.TabIndex = 9;
             label8.Text = resources.GetString("label8.Text");
             // 
@@ -198,7 +198,7 @@
             panel2.Size = new Size(988, 100);
             panel2.TabIndex = 11;
             // 
-            // AuthorFormcs
+            // AuthorForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -215,7 +215,7 @@
             Controls.Add(button2);
             Controls.Add(button1);
             Margin = new Padding(3, 4, 3, 4);
-            Name = "AuthorFormcs";
+            Name = "AuthorForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ИС Больница - Информация об авторе";
             panel1.ResumeLayout(false);

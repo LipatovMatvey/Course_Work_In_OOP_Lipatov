@@ -1,4 +1,6 @@
 <Solution>
   <Project Path="Course_work_in_OOP_Lipatov/Course_work_in_OOP_Lipatov.csproj" />
-  <Project Path="Programm/Programm.vdproj" Type="Installer" />
+  <Project Path="Programm/Programm.vdproj" Type="Installer">
+    <Build />
+  </Project>
 </Solution>

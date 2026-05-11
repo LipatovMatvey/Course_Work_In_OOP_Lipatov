@@ -9,7 +9,7 @@ namespace Course_work_in_OOP_Lipatov
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new AuthorFormcs());
+            Application.Run(new AuthorForm());
         }
     }
 }

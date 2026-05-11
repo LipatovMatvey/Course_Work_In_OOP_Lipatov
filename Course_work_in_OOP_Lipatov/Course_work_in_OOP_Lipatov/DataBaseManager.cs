@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Npgsql;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -9,101 +10,90 @@ namespace Course_work_in_OOP_Lipatov
     public class DataBaseManager
     {
         /// <summary>
-        /// Строка подключения к текущей БД
+        /// Строка подключения к текущей выбранной базе данных
         /// </summary>
-        private string connectionString;
+        private string? connectionString;
 
         /// <summary>
-        /// Строка подключения к системной БД postgres
+        /// Строка подключения к системной базе данных postgres
         /// </summary>
-        private string masterConnectionString;
+        private string? masterConnectionString;
 
         /// <summary>
-        /// Имя текущей базы данных
+        /// Имя текущей выбранной базы данных
         /// </summary>
-        private string currentDatabaseName;
+        private string? currentDatabaseName;
 
         /// <summary>
-        /// Регулярное выражение для проверки имени создаваемой БД
+        /// Регулярное выражение для проверки корректности имени базы данных при создании
         /// </summary>
         private static readonly Regex dbNameRegex = new Regex(@"^(?![\s\d]).+", RegexOptions.Compiled);
 
         /// <summary>
-        /// Конструктор инициализирует менеджер с БД по умолчанию
+        /// Конструктор менеджера
         /// </summary>
         public DataBaseManager()
         {
-            string host = "localhost";
-            string username = "postgres";
-            string password = "MAtvey180106";
-            int port = 5432;
-            currentDatabaseName = "HospitalDB";
-            connectionString = $"Host={host};Username={username};Password={password};Database={currentDatabaseName};Port={port}";
-            masterConnectionString = $"Host={host};Username={username};Password={password};Database=postgres;Port={port}";
-            InitializeDatabase();
+            LoadConnectionSettings();
         }
 
         /// <summary>
-        /// Проверяет, существует ли в базе полностью совпадающая запись пациента.
-        /// Сравнение выполняется по всем полям
+        /// Загружает строку подключения к системной БД postgres из файла конфигурации
         /// </summary>
-        /// <param name="patient">Данные пациента для проверки</param>
-        /// <returns>true, если найден дубликат</returns>
-        public bool IsDuplicate(Patient patient)
+        /// <exception cref="Exception">Выбрасывается, если в конфигурации отсутствует строка MasterDB</exception>
+        private void LoadConnectionSettings()
         {
-            try
+            var masterSetting = ConfigurationManager.ConnectionStrings["MasterDB"];
+            if (masterSetting == null || string.IsNullOrEmpty(masterSetting.ConnectionString))
             {
-                using (var conn = new NpgsqlConnection(connectionString))
-                {
-                    conn.Open();
-                    var query = @"
-                        SELECT COUNT(*) FROM patients
-                        WHERE COALESCE(TRIM(LOWER(full_name)),'') = COALESCE(TRIM(LOWER(@fullName)),'')
-                          AND age = @age
-                          AND COALESCE(TRIM(LOWER(gender)),'') = COALESCE(TRIM(LOWER(@gender)),'')
-                          AND COALESCE(TRIM(LOWER(disease)),'') = COALESCE(TRIM(LOWER(@disease)),'')
-                          AND duration = @duration
-                          AND COALESCE(TRIM(LOWER(severity)),'') = COALESCE(TRIM(LOWER(@severity)),'')
-                          AND COALESCE(TRIM(LOWER(department)),'') = COALESCE(TRIM(LOWER(@department)),'')";
-
-                    if (patient.Id > 0)
-                    {
-                        query += " AND id <> @id";
-                    }
-
-                    using (var cmd = new NpgsqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@fullName", patient.FullName ?? string.Empty);
-                        cmd.Parameters.AddWithValue("@age", patient.Age);
-                        cmd.Parameters.AddWithValue("@gender", patient.Gender ?? string.Empty);
-                        cmd.Parameters.AddWithValue("@disease", patient.Disease ?? string.Empty);
-                        cmd.Parameters.AddWithValue("@duration", patient.Duration);
-                        cmd.Parameters.AddWithValue("@severity", patient.Severity ?? string.Empty);
-                        cmd.Parameters.AddWithValue("@department", patient.Department ?? string.Empty);
-                        if (patient.Id > 0)
-                        {
-                            cmd.Parameters.AddWithValue("@id", patient.Id);
-                        }
-                        var result = cmd.ExecuteScalar();
-                        if (result != null && int.TryParse(result.ToString(), out int count))
-                        {
-                            return count > 0;
-                        }
-                    }
-                }
+                throw new Exception("В файле конфигурации отсутствует строка подключения MasterDB.");
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при проверке дубликатов: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return false;
+            masterConnectionString = masterSetting.ConnectionString;
+            currentDatabaseName = null;
         }
 
         /// <summary>
-        /// Инициализирует структуру БД
+        /// Проверяет, выбрана ли в данный момент какая-либо база данных
         /// </summary>
+        /// <returns>true, если база данных выбрана; иначе false</returns>
+        private bool EnsureDatabaseSelected()
+        {
+            if (string.IsNullOrEmpty(currentDatabaseName))
+            {
+                MessageBox.Show("Сначала выберите или создайте базу данных!",
+                    "База не выбрана", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Строит строку подключения к текущей базе данных на основе параметров из masterConnectionString и имени текущей БД
+        /// </summary>
+        private void BuildConnectionString()
+        {
+            if (string.IsNullOrEmpty(currentDatabaseName))
+            {
+                connectionString = null;
+                return;
+            }
+
+            var builder = new NpgsqlConnectionStringBuilder(masterConnectionString);
+            string? host = builder.Host;
+            int? port = builder.Port;
+            string? username = builder.Username;
+            string? password = builder.Password;
+            connectionString = $"Host={host};Username={username};Password={password};Database={currentDatabaseName};Port={port}";
+        }
+
+        /// <summary>
+        /// Инициализирует структуру текущей базы данных: создаёт таблицу patients, если она не существует
+        /// </summary>
+        /// <exception cref="Exception">Выбрасывается, если БД не существует или произошла другая ошибка</exception>
         private void InitializeDatabase()
         {
+            if (!EnsureDatabaseSelected()) return;
+
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -137,17 +127,13 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// Устанавливает текущую базу данных по имени
+        /// Устанавливает текущую базу данных по имени и перестраивает строку подключения
         /// </summary>
         /// <param name="dbName">Имя базы данных, которую нужно сделать текущей</param>
-        public void SetCurrentDatabase(string dbName)
+        public void SetCurrentDatabase(string? dbName)
         {
             currentDatabaseName = dbName;
-            string host = "localhost";
-            string username = "postgres";
-            string password = "MAtvey180106";
-            int port = 5432;
-            connectionString = $"Host={host};Username={username};Password={password};Database={currentDatabaseName};Port={port}";
+            BuildConnectionString();
         }
 
         /// <summary>
@@ -179,7 +165,7 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// Создаёт новую базу данных с указанным именем и инициализирует в ней таблицы
+        /// Создаёт новую базу данных с указанным именем, переключается на неё и инициализирует таблицы
         /// </summary>
         /// <param name="dbName">Имя создаваемой базы данных</param>
         public void CreateDatabase(string dbName)
@@ -211,7 +197,7 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// Удаляет указанную базу данных
+        /// Удаляет указанную базу данных. Невозможно удалить текущую активную базу
         /// </summary>
         /// <param name="dbName">Имя удаляемой базы данных</param>
         public void DeleteDatabase(string dbName)
@@ -252,8 +238,8 @@ namespace Course_work_in_OOP_Lipatov
         /// Переключается на указанную базу данных и инициализирует её структуру
         /// </summary>
         /// <param name="dbName">Имя базы данных для переключения</param>
-        /// <returns>true, если переключение выполнено успешно, иначе false</returns>
-        public bool SwitchToDatabase(string dbName)
+        /// <returns>true, если переключение выполнено успешно; иначе false</returns>
+        public bool SwitchToDatabase(string? dbName)
         {
             try
             {
@@ -269,12 +255,74 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
+        /// Проверяет, существует ли в текущей базе данных пациент с точно такими же данными
+        /// </summary>
+        /// <param name="patient">Проверяемый пациент</param>
+        /// <returns>true, если дубликат найден; иначе false</returns>
+        public bool IsDuplicate(Patient patient)
+        {
+            if (!EnsureDatabaseSelected())
+            {
+                return false;
+            }
+            try
+            {
+                using (var conn = new NpgsqlConnection(connectionString))
+                {
+                    conn.Open();
+                    var query = @"
+                        SELECT COUNT(*) FROM patients
+                        WHERE COALESCE(TRIM(LOWER(full_name)),'') = COALESCE(TRIM(LOWER(@fullName)),'')
+                          AND age = @age
+                          AND COALESCE(TRIM(LOWER(gender)),'') = COALESCE(TRIM(LOWER(@gender)),'')
+                          AND COALESCE(TRIM(LOWER(disease)),'') = COALESCE(TRIM(LOWER(@disease)),'')
+                          AND duration = @duration
+                          AND COALESCE(TRIM(LOWER(severity)),'') = COALESCE(TRIM(LOWER(@severity)),'')
+                          AND COALESCE(TRIM(LOWER(department)),'') = COALESCE(TRIM(LOWER(@department)),'')";
+
+                    if (patient.Id > 0)
+                    {
+                        query += " AND id <> @id";
+                    }
+                    using (var cmd = new NpgsqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@fullName", patient.FullName ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@age", patient.Age);
+                        cmd.Parameters.AddWithValue("@gender", patient.Gender ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@disease", patient.Disease ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@duration", patient.Duration);
+                        cmd.Parameters.AddWithValue("@severity", patient.Severity ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@department", patient.Department ?? string.Empty);
+                        if (patient.Id > 0)
+                        {
+                            cmd.Parameters.AddWithValue("@id", patient.Id);
+                        }
+                        var result = cmd.ExecuteScalar();
+                        if (result != null && int.TryParse(result.ToString(), out int count))
+                        {
+                            return count > 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при проверке дубликатов: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Возвращает список всех пациентов из текущей базы данных
         /// </summary>
-        /// <returns>Список объектов Patient</returns>
+        /// <returns>Список пациентов</returns>
         public List<Patient> GetAllPatients()
         {
             var patients = new List<Patient>();
+            if (!EnsureDatabaseSelected())
+            {
+                return patients;
+            }
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -308,11 +356,15 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// Добавляет нового пациента в базу данных
+        /// Добавляет нового пациента в текущую базу данных
         /// </summary>
-        /// <param name="patient">Объект Patient с данными нового пациента</param>
+        /// <param name="patient">Данные добавляемого пациента</param>
         public void AddPatient(Patient patient)
         {
+            if (!EnsureDatabaseSelected())
+            {
+                return;
+            }
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -330,8 +382,7 @@ namespace Course_work_in_OOP_Lipatov
                         cmd.Parameters.AddWithValue("@duration", patient.Duration);
                         cmd.Parameters.AddWithValue("@department", patient.Department);
                         var newId = cmd.ExecuteScalar();
-                        MessageBox.Show($"Пациент добавлен успешно! ID: {newId}",
-                            "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"Пациент добавлен успешно! ID: {newId}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -342,11 +393,15 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// Обновляет данные существующего пациента
+        /// Обновляет данные существующего пациента в текущей базе данных
         /// </summary>
-        /// <param name="patient">Объект Patient с обновлёнными данными</param>
+        /// <param name="patient">Пациент с обновлёнными данными</param>
         public void UpdatePatient(Patient patient)
         {
+            if (!EnsureDatabaseSelected())
+            {
+                return;
+            }
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -367,10 +422,7 @@ namespace Course_work_in_OOP_Lipatov
                         cmd.Parameters.AddWithValue("@department", patient.Department);
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Данные пациента обновлены успешно!",
-                                "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
+                            MessageBox.Show("Данные пациента обновлены успешно!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -381,11 +433,13 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// Удаляет пациента по идентификатору
+        /// Удаляет пациента по идентификатору из текущей базы данных
         /// </summary>
         /// <param name="id">Идентификатор удаляемого пациента</param>
         public void DeletePatient(int id)
         {
+            if (!EnsureDatabaseSelected()) return;
+
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -396,10 +450,7 @@ namespace Course_work_in_OOP_Lipatov
                         cmd.Parameters.AddWithValue("@id", id);
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Пациент удален успешно!",
-                                "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
+                            MessageBox.Show("Пациент удален успешно!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -410,13 +461,14 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// Выполняет поиск пациентов по частичному совпадению ФИО, заболевания или отделения
+        /// Выполняет поиск пациентов по частичному совпадению ФИО, диагноза или отделения
         /// </summary>
-        /// <param name="searchText">Поисковый запрос</param>
-        /// <returns>Список пациентов, соответствующих критерию</returns>
+        /// <param name="searchText">Текст поискового запроса</param>
+        /// <returns>Список пациентов, удовлетворяющих условию</returns>
         public List<Patient> SearchPatients(string searchText)
         {
             var patients = new List<Patient>();
+            if (!EnsureDatabaseSelected()) return patients;
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -428,7 +480,6 @@ namespace Course_work_in_OOP_Lipatov
                            OR disease ILIKE @search 
                            OR department ILIKE @search
                         ORDER BY id";
-
                     using (var cmd = new NpgsqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@search", $"%{searchText}%");
@@ -460,11 +511,12 @@ namespace Course_work_in_OOP_Lipatov
         }
 
         /// <summary>
-        /// Удаляет всех пациентов из таблицы и сбрасывает счётчик идентификаторов
+        /// Удаляет всех пациентов из текущей базы данных и сбрасывает счётчик идентификаторов
         /// </summary>
-        /// <exception cref="Exception">Возникает при ошибке очистки базы данных</exception>
+        /// <exception cref="Exception">Выбрасывается при ошибке очистки</exception>
         public void ClearAllPatients()
         {
+            if (!EnsureDatabaseSelected()) return;
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -475,17 +527,12 @@ namespace Course_work_in_OOP_Lipatov
                         using (var cmd = new NpgsqlCommand("DELETE FROM patients", conn, transaction))
                         {
                             int deletedCount = cmd.ExecuteNonQuery();
-                            using (var resetCmd = new NpgsqlCommand(
-                                "ALTER SEQUENCE patients_id_seq RESTART WITH 1",
-                                conn, transaction))
+                            using (var resetCmd = new NpgsqlCommand("ALTER SEQUENCE patients_id_seq RESTART WITH 1", conn, transaction))
                             {
                                 resetCmd.ExecuteNonQuery();
                             }
                             transaction.Commit();
-                            MessageBox.Show($"Удалено пациентов: {deletedCount}",
-                                "Очистка выполнена",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
+                            MessageBox.Show($"Удалено пациентов: {deletedCount}", "Очистка выполнена", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                 }
@@ -495,5 +542,10 @@ namespace Course_work_in_OOP_Lipatov
                 throw new Exception($"Ошибка при очистке базы данных: {ex.Message}", ex);
             }
         }
+
+        /// <summary>
+        /// Показывает, выбрана ли в данный момент какая-либо база данных
+        /// </summary>
+        public bool HasDatabaseSelected => !string.IsNullOrEmpty(currentDatabaseName);
     }
 }

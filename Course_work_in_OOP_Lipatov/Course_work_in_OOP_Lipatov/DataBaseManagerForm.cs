@@ -84,7 +84,7 @@ namespace Course_work_in_OOP_Lipatov
                 MessageBox.Show("Выберите базу данных для переключения.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string dbName = listBoxDatabases.SelectedItem.ToString();
+            string? dbName = listBoxDatabases.SelectedItem.ToString();
             if (dbManager.SwitchToDatabase(dbName))
             {
                 DatabaseChanged = true;

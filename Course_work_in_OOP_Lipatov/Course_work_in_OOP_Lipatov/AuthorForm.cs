@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Course_work_in_OOP_Lipatov
 {
-    public partial class AuthorFormcs : Form
+    public partial class AuthorForm : Form
     {
         /// <summary>
         /// Таймер для автоматического перехода
@@ -18,7 +18,7 @@ namespace Course_work_in_OOP_Lipatov
         /// <summary>
         /// Конструктор
         /// </summary>
-        public AuthorFormcs()
+        public AuthorForm()
         {
             InitializeComponent();
             autoTransitionTimer = new System.Windows.Forms.Timer();
