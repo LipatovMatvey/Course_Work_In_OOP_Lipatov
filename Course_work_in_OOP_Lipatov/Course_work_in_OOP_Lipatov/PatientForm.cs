@@ -74,7 +74,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Объект, вызвавший событие</param>
         /// <param name="e">Аргументы события</param>
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
@@ -86,7 +86,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             if (ValidateForm())
             {

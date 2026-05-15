@@ -231,7 +231,7 @@
             btnSave.TabIndex = 14;
             btnSave.Text = "Сохранить";
             btnSave.UseVisualStyleBackColor = false;
-            btnSave.Click += btnSave_Click;
+            btnSave.Click += BtnSave_Click;
             // 
             // btnCancel
             // 
@@ -248,7 +248,7 @@
             btnCancel.TabIndex = 15;
             btnCancel.Text = "Отмена";
             btnCancel.UseVisualStyleBackColor = false;
-            btnCancel.Click += btnCancel_Click;
+            btnCancel.Click += BtnCancel_Click;
             // 
             // panel1
             // 
