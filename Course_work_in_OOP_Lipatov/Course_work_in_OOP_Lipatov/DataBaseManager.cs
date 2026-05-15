@@ -27,7 +27,7 @@ namespace Course_work_in_OOP_Lipatov
         /// <summary>
         /// Регулярное выражение для проверки корректности имени базы данных при создании
         /// </summary>
-        private static readonly Regex dbNameRegex = new Regex(@"^(?![\s\d]).+", RegexOptions.Compiled);
+        private static readonly Regex dbNameRegex = new Regex(@"^[A-Z][A-Za-z0-9_]{5,}$", RegexOptions.Compiled);
 
         /// <summary>
         /// Конструктор менеджера
@@ -92,8 +92,10 @@ namespace Course_work_in_OOP_Lipatov
         /// <exception cref="Exception">Выбрасывается, если БД не существует или произошла другая ошибка</exception>
         private void InitializeDatabase()
         {
-            if (!EnsureDatabaseSelected()) return;
-
+            if (!EnsureDatabaseSelected())
+            {
+                return;
+            }
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -172,7 +174,7 @@ namespace Course_work_in_OOP_Lipatov
         {
             if (string.IsNullOrWhiteSpace(dbName) || !dbNameRegex.IsMatch(dbName))
             {
-                MessageBox.Show("Некорректное имя базы данных. Имя не должно начинаться с пробела или цифры и не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Некорректное имя базы данных. Имя не должно начинаться с пробела или цифры, не может быть пустым.\nДолжно начинаться с заглавной буквы английского алфавита.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             try
@@ -272,7 +274,7 @@ namespace Course_work_in_OOP_Lipatov
                     conn.Open();
                     var query = @"
                         SELECT COUNT(*) FROM patients
-                        WHERE COALESCE(TRIM(LOWER(full_name)),'') = COALESCE(TRIM(LOWER(@fullName)),'')
+                        WHERE COALESCE(TRIM(LOWER(full_name)),'') = COALESCE(TRIM(LOWER(@full_name)),'')
                           AND age = @age
                           AND COALESCE(TRIM(LOWER(gender)),'') = COALESCE(TRIM(LOWER(@gender)),'')
                           AND COALESCE(TRIM(LOWER(disease)),'') = COALESCE(TRIM(LOWER(@disease)),'')
@@ -286,7 +288,7 @@ namespace Course_work_in_OOP_Lipatov
                     }
                     using (var cmd = new NpgsqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@fullName", patient.FullName ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@full_name", patient.FullName ?? string.Empty);
                         cmd.Parameters.AddWithValue("@age", patient.Age);
                         cmd.Parameters.AddWithValue("@gender", patient.Gender ?? string.Empty);
                         cmd.Parameters.AddWithValue("@disease", patient.Disease ?? string.Empty);
@@ -438,8 +440,10 @@ namespace Course_work_in_OOP_Lipatov
         /// <param name="id">Идентификатор удаляемого пациента</param>
         public void DeletePatient(int id)
         {
-            if (!EnsureDatabaseSelected()) return;
-
+            if (!EnsureDatabaseSelected())
+            {
+                return;
+            }
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -468,7 +472,10 @@ namespace Course_work_in_OOP_Lipatov
         public List<Patient> SearchPatients(string searchText)
         {
             var patients = new List<Patient>();
-            if (!EnsureDatabaseSelected()) return patients;
+            if (!EnsureDatabaseSelected())
+            {
+                return patients;
+            }
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
@@ -516,7 +523,10 @@ namespace Course_work_in_OOP_Lipatov
         /// <exception cref="Exception">Выбрасывается при ошибке очистки</exception>
         public void ClearAllPatients()
         {
-            if (!EnsureDatabaseSelected()) return;
+            if (!EnsureDatabaseSelected())
+            {
+                return;
+            }
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))

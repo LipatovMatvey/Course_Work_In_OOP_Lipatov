@@ -66,7 +66,7 @@
             btnCreate.TabIndex = 5;
             btnCreate.Text = "Создать";
             btnCreate.UseVisualStyleBackColor = false;
-            btnCreate.Click += btnCreate_Click;
+            btnCreate.Click += BtnCreate_Click;
             // 
             // btnDelete
             // 
@@ -83,7 +83,7 @@
             btnDelete.TabIndex = 6;
             btnDelete.Text = "Удалить";
             btnDelete.UseVisualStyleBackColor = false;
-            btnDelete.Click += btnDelete_Click;
+            btnDelete.Click += BtnDelete_Click;
             // 
             // btnSwitch
             // 
@@ -99,7 +99,7 @@
             btnSwitch.TabIndex = 7;
             btnSwitch.Text = "Переключиться";
             btnSwitch.UseVisualStyleBackColor = false;
-            btnSwitch.Click += btnSwitch_Click;
+            btnSwitch.Click += BtnSwitch_Click;
             // 
             // btnRefresh
             // 
@@ -116,7 +116,7 @@
             btnRefresh.TabIndex = 8;
             btnRefresh.Text = "Обновить";
             btnRefresh.UseVisualStyleBackColor = false;
-            btnRefresh.Click += btnRefresh_Click;
+            btnRefresh.Click += BtnRefresh_Click;
             // 
             // label1
             // 

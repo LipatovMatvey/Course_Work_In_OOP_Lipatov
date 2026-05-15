@@ -54,7 +54,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnCreate_Click(object sender, EventArgs e)
+        private void BtnCreate_Click(object sender, EventArgs e)
         {
             string newDbName = txtNewDbName.Text.Trim();
             if (string.IsNullOrWhiteSpace(newDbName))
@@ -77,7 +77,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnSwitch_Click(object sender, EventArgs e)
+        private void BtnSwitch_Click(object sender, EventArgs e)
         {
             if (listBoxDatabases.SelectedItem == null)
             {
@@ -98,14 +98,14 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
             if (listBoxDatabases.SelectedItem == null)
             {
                 MessageBox.Show("Выберите базу данных для удаления.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string dbName = listBoxDatabases.SelectedItem.ToString();
+            string? dbName = listBoxDatabases.SelectedItem.ToString();
             if (MessageBox.Show($"Удалить базу данных \"{dbName}\"?\nВосстановить будет невозможно.", "Подтверждение",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
@@ -119,7 +119,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private void BtnRefresh_Click(object sender, EventArgs e)
         {
             LoadDatabases();
         }
