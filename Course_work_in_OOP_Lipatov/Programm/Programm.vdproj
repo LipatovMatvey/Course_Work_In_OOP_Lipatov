@@ -21,7 +21,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A972BF0817AE4831B10E64FF56330567"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_C39CDC1F57A3475CAB4078076C20656E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C59E80F3D175467CB5A0D4044B20900F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -134,6 +146,46 @@
             {
             "SourcePath" = "8:..\\Course_work_in_OOP_Lipatov\\FOTO\\HospitalFoto.ico"
             "TargetName" = "8:HospitalFoto.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B21590938B21498A928CBB6F75B5698D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A972BF0817AE4831B10E64FF56330567"
+            {
+            "SourcePath" = "8:..\\Course_work_in_OOP_Lipatov\\FOTO\\HosFoto.ico"
+            "TargetName" = "8:HosFoto.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B21590938B21498A928CBB6F75B5698D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C59E80F3D175467CB5A0D4044B20900F"
+            {
+            "SourcePath" = "8:..\\Course_work_in_OOP_Lipatov\\FOTO\\588hospital_100778.ico"
+            "TargetName" = "8:588hospital_100778.ico"
             "Tag" = "8:"
             "Folder" = "8:_B21590938B21498A928CBB6F75B5698D"
             "Condition" = "8:"
@@ -349,7 +401,7 @@
             "Target" = "8:_C39CDC1F57A3475CAB4078076C20656E"
             "Folder" = "8:_ADCBFD3774C34B85AF88AECA8B00F279"
             "WorkingFolder" = "8:_B21590938B21498A928CBB6F75B5698D"
-            "Icon" = "8:_84C9F46B844A4184992A38FEFA18A9C8"
+            "Icon" = "8:_C59E80F3D175467CB5A0D4044B20900F"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_665903A278B44F1DBEF2E07CD98A0F89"
@@ -363,7 +415,7 @@
             "Target" = "8:_C39CDC1F57A3475CAB4078076C20656E"
             "Folder" = "8:_41C1DB6FA1B846CC85BA8BA20A499A90"
             "WorkingFolder" = "8:_B21590938B21498A928CBB6F75B5698D"
-            "Icon" = "8:_84C9F46B844A4184992A38FEFA18A9C8"
+            "Icon" = "8:_C59E80F3D175467CB5A0D4044B20900F"
             "Feature" = "8:"
             }
         }
