@@ -48,6 +48,7 @@ namespace Course_work_in_OOP_Lipatov
             patients = dbManager.GetAllPatients();
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = patients;
+            SetRussianColumnHeaders();
             dataGridView1.Refresh();
         }
 
@@ -56,7 +57,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnBack_Click(object sender, EventArgs e)
+        private void BtnBack_Click(object sender, EventArgs e)
         {
             this.Hide();
             var mainForm = new AuthorForm();
@@ -69,7 +70,7 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             var form = new PatientForm(dbManager: dbManager);
             if (form.ShowDialog() == DialogResult.OK)
@@ -84,11 +85,11 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                var patient = (Patient)dataGridView1.SelectedRows[0].DataBoundItem;
+                var patient = dataGridView1.SelectedRows[0].DataBoundItem as Patient;
                 var form = new PatientForm(patient, dbManager);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -108,11 +109,11 @@ namespace Course_work_in_OOP_Lipatov
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Аргументы события</param>
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                var patient = (Patient)dataGridView1.SelectedRows[0].DataBoundItem;
+                var patient = dataGridView1.SelectedRows[0].DataBoundItem as Patient;
                 if (MessageBox.Show($"Вы уверены, что хотите удалить пациента:\n{patient.FullName}?",
                     "Подтверждение удаления", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
@@ -212,7 +213,8 @@ namespace Course_work_in_OOP_Lipatov
                 filteredPatients = dbManager.SearchPatients(txtSearch.Text);
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = filteredPatients;
-                    dataGridView1.Refresh();
+                SetRussianColumnHeaders();
+                dataGridView1.Refresh();
             }
             else
             {
@@ -284,8 +286,6 @@ namespace Course_work_in_OOP_Lipatov
             }
         }
 
-
-
         /// <summary>
         /// Обработчик клика по заголовку столбца DataGridView
         /// </summary>
@@ -326,6 +326,7 @@ namespace Course_work_in_OOP_Lipatov
                 }
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = data;
+                SetRussianColumnHeaders();
                 dataGridView1.Refresh();
             }
         }
@@ -339,8 +340,52 @@ namespace Course_work_in_OOP_Lipatov
         {
             if (e.RowIndex >= 0)
             {
-                btnEdit_Click(sender, e);
+                BtnEdit_Click(sender, e);
             }
         }
+
+        /// <summary>
+        /// Метод делает заголовки колон на русском языке
+        /// </summary>
+        private void SetRussianColumnHeaders()
+        {
+            if (dataGridView1.Columns.Count == 0)
+            {
+                return;
+            }
+            if (dataGridView1.Columns["Id"] != null)
+            {
+                dataGridView1.Columns["Id"].HeaderText = "ID";
+            }
+            if (dataGridView1.Columns["FullName"] != null)
+            {
+                dataGridView1.Columns["FullName"].HeaderText = "ФИО";
+            }   
+            if (dataGridView1.Columns["Age"] != null)
+            {
+                dataGridView1.Columns["Age"].HeaderText = "Возраст";
+            }   
+            if (dataGridView1.Columns["Gender"] != null)
+            {
+                dataGridView1.Columns["Gender"].HeaderText = "Пол";
+            }   
+            if (dataGridView1.Columns["Disease"] != null)
+            {
+                dataGridView1.Columns["Disease"].HeaderText = "Диагноз";
+            }   
+            if (dataGridView1.Columns["Severity"] != null)
+            {
+                dataGridView1.Columns["Severity"].HeaderText = "Тяжесть";
+            }                
+            if (dataGridView1.Columns["Duration"] != null)
+            {
+                dataGridView1.Columns["Duration"].HeaderText = "Дней";
+            }
+            if (dataGridView1.Columns["Department"] != null)
+            {
+                dataGridView1.Columns["Department"].HeaderText = "Отделение";
+            }
+        }
+                
     }
 }

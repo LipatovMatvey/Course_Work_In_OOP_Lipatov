@@ -59,7 +59,7 @@
             button1.TabIndex = 1;
             button1.Text = "Титульная страница";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += btnBack_Click;
+            button1.Click += BtnBack_Click;
             // 
             // dataGridView1
             // 
@@ -114,7 +114,7 @@
             btnAdd.TabIndex = 3;
             btnAdd.Text = "Добавить";
             btnAdd.UseVisualStyleBackColor = false;
-            btnAdd.Click += btnAdd_Click;
+            btnAdd.Click += BtnAdd_Click;
             // 
             // btnEdit
             // 
@@ -130,7 +130,7 @@
             btnEdit.TabIndex = 4;
             btnEdit.Text = "Редактировать";
             btnEdit.UseVisualStyleBackColor = false;
-            btnEdit.Click += btnEdit_Click;
+            btnEdit.Click += BtnEdit_Click;
             // 
             // btnDelete
             // 
@@ -146,7 +146,7 @@
             btnDelete.TabIndex = 5;
             btnDelete.Text = "Удалить";
             btnDelete.UseVisualStyleBackColor = false;
-            btnDelete.Click += btnDelete_Click;
+            btnDelete.Click += BtnDelete_Click;
             // 
             // txtSearch
             // 
